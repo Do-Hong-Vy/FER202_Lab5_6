@@ -158,6 +158,19 @@
           "relationship": "Wife"
         }
       ]
+    },
+    {
+      "id": "7",
+      "empName": {
+        "firstName": "Vỹ",
+        "lastName": "Đỗ Hồng"
+      },
+      "empSalary": 1000000,
+      "empGender": "Male",
+      "empBirthdate": "2026-07-17",
+      "depId": 2,
+      "supervisorId": null,
+      "dependents": []
     }
   ],
   "projects": [

@@ -52,12 +52,7 @@ const CreateEmployee = () => {
     ) {
       newErrors.salary = "Salary must be a positive number greater than zero.";
     }
-    if (!formData.gender) {
-      newErrors.gender = "Please select a gender.";
-    }
-    if (!formData.birthdate) {
-      newErrors.birthdate = "Please select a birthdate.";
-    }
+
     if (!formData.department) {
       newErrors.department = "Please select a department.";
     }
@@ -69,7 +64,15 @@ const CreateEmployee = () => {
     e.preventDefault();
     if (validate()) {
       try {
+        const empListRes = await axios.get("http://localhost:9999/employees");
+        const maxId = empListRes.data.reduce((max, emp) => {
+          const currentId = parseInt(emp.id, 10);
+          return currentId > max ? currentId : max;
+        }, 0);
+        const newId = (maxId + 1).toString();
+
         const newEmployee = {
+          id: newId,
           empName: {
             firstName: formData.firstName.trim(),
             lastName: formData.lastName.trim(),
@@ -93,7 +96,7 @@ const CreateEmployee = () => {
 
   return (
     <Container className="mt-5">
-      <div style={{ maxWidth: "600px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "600px", margin: "0 auto" }} className="border rounded p-4 shadow-sm bg-white">
         <h2 className="mb-4 text-center">Create New Employee</h2>
         {submitError && <Alert variant="danger">{submitError}</Alert>}
         <Form onSubmit={handleSubmit}>
@@ -147,7 +150,7 @@ const CreateEmployee = () => {
 
           <Form.Group className="mb-3">
             <Form.Label>
-              Gender <span className="text-danger">*</span>
+              Gender
             </Form.Label>
             <Form.Select
               name="gender"
@@ -166,7 +169,7 @@ const CreateEmployee = () => {
 
           <Form.Group className="mb-3">
             <Form.Label>
-              Birthdate <span className="text-danger">*</span>
+              Birthdate
             </Form.Label>
             <Form.Control
               type="date"

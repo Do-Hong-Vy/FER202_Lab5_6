@@ -106,6 +106,16 @@ const EmployeeList = () => {
                   onChange={() => handleDepChange(dep.id.toString())}
                 />
               ))}
+              {selectedDeps.length > 0 && (
+                <Button 
+                  variant="outline-danger" 
+                  className="w-100 mt-3" 
+                  size="sm"
+                  onClick={() => setSelectedDeps([])}
+                >
+                  Reset Filter
+                </Button>
+              )}
             </Form>
           </div>
         </Col>
@@ -149,13 +159,17 @@ const EmployeeList = () => {
                     <td>{emp.dependents ? emp.dependents.length : 0} people</td>
                     <td>{getProjectsForEmployee(emp.id)}</td>
                     <td>
-                      <Button
-                        variant="danger"
-                        size="sm"
-                        onClick={() => handleDelete(emp.id)}
-                      >
-                        Delete
-                      </Button>
+                      <div className="d-flex gap-2">
+                        <Link to={`/employee/detail/${emp.id}`} className="btn btn-success btn-sm">Detail</Link>
+                        <Link to={`/employee/edit/${emp.id}`} className="btn btn-warning btn-sm">Edit</Link>
+                        <Button
+                          variant="danger"
+                          size="sm"
+                          onClick={() => handleDelete(emp.id)}
+                        >
+                          Delete
+                        </Button>
+                      </div>
                     </td>
                   </tr>
                 ))
